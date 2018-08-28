@@ -53,3 +53,16 @@ $blue:3;
     opacity: opacity($hslcolor);
     alpha2: alpha($hslacolor);
 }
+
+.transparent{
+    $transparentcolor: transparent;
+    red: red($transparentcolor);
+    green: green($transparentcolor);
+    blue: blue($transparentcolor);
+    alpha: alpha($transparentcolor);
+    opacity: opacity($transparentcolor);
+    colorA: rgba(0,0,0,0);
+    colorB: $transparentcolor;
+    colorC: darken($transparentcolor, 50);
+    colorD: lighten($transparentcolor, 100);
+}

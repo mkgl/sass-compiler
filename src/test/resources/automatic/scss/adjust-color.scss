@@ -52,3 +52,8 @@
     rb: adjust-color($hsla, $red: 25, $blue: 15);
     sla: adjust-color($hsla, $saturation: -25%, $lightness: 10%, $alpha: -0.25);
 }
+
+.transparent {
+    t1: adjust-color(transparent);
+    t2: adjust-color(transparent, $blue: 5);
+}

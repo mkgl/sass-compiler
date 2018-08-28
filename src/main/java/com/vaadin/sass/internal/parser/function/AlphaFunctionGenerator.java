@@ -42,6 +42,8 @@ public class AlphaFunctionGenerator extends AbstractFunctionGenerator {
             ActualArgumentList parameterList = color.getParameterList();
             SassListItem last = parameterList.get(parameterList.size() - 1);
             opacity = ((LexicalUnitImpl) last).getFloatValue();
+        } else if (ColorUtil.isTransparent(color)) {
+            opacity = 0f;
         }
         return LexicalUnitImpl.createNumber(function.getLineNumber(),
                 function.getColumnNumber(), opacity);
@@ -52,7 +54,7 @@ public class AlphaFunctionGenerator extends AbstractFunctionGenerator {
         LexicalUnitImpl color = (LexicalUnitImpl) getParam(args, "color");
         if (!(color instanceof LexicalUnitImpl)
                 || (!ColorUtil.isColor(color) && !ColorUtil.isRgba(color) && !ColorUtil
-                        .isHsla(color))) {
+                        .isHsla(color)) && !ColorUtil.isTransparent(color)) {
             throw new ParseException("The function "
                     + function.getFunctionName()
                     + " requires a color as its first parameter", function);

@@ -45,3 +45,8 @@
     sla: scale-color($hsla, $saturation: -25%, $lightness: 10%, $alpha: -25%);
     ga: scale-color($color: $hsla, $green: -50%, $alpha: 50%);
 }
+
+.transparent {
+    t1: scale-color(transparent);
+    t2: scale-color(transparent, $blue: 5%);
+}

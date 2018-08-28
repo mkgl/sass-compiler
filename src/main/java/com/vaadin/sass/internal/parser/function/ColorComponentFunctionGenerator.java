@@ -80,7 +80,7 @@ public class ColorComponentFunctionGenerator extends AbstractFunctionGenerator {
         }
         LexicalUnitImpl firstParam = (LexicalUnitImpl) arg;
         if (!ColorUtil.isColor(firstParam) && !ColorUtil.isRgba(firstParam)
-                && !ColorUtil.isHsla(firstParam)) {
+                && !ColorUtil.isHsla(firstParam) && !ColorUtil.isTransparent(firstParam)) {
             throw new ParseException("The parameter of the function "
                     + function.getFunctionName() + " must be a valid color",
                     function);

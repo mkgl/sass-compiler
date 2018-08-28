@@ -151,7 +151,7 @@ public class AdjustColorFunctionGenerator extends AbstractFunctionGenerator {
         }
         LexicalUnitImpl result = (LexicalUnitImpl) resultItem;
         if (!ColorUtil.isColor(result) && !ColorUtil.isRgba(result)
-                && !ColorUtil.isHsla(result)) {
+                && !ColorUtil.isHsla(result) && !ColorUtil.isTransparent(result)) {
             throw new ParseException(
                     "The color argument must represent a valid color", function);
         }

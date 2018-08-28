@@ -35,6 +35,7 @@ public class ColorUtil {
             .compile("#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})");
     private static Map<String, String> colorNameToHex = new HashMap<String, String>();
     private static Map<String, String> hexToColorName = new HashMap<String, String>();
+    private static String transparent = "transparent";
 
     static {
         colorNameToHex.put("aqua", "#00ffff");
@@ -169,6 +170,18 @@ public class ColorUtil {
     }
 
     /**
+     * Returns true if the lexical unit represents the transparent keyword, false
+     * otherwise.
+     *
+     * @param unit lexical unit
+     * @return true if unit represents the transparent color
+     */
+    public static boolean isTransparent(LexicalUnitImpl unit) {
+        return unit.getLexicalUnitType() == LexicalUnit.SAC_IDENT
+                && transparent.equals(unit.getStringValue());
+    }
+
+    /**
      * Returns the alpha component of the color. For colors that do not have an
      * explicit alpha component, returns 1.
      * 
@@ -177,7 +190,9 @@ public class ColorUtil {
      * @return The alpha component of color.
      */
     public static float getAlpha(LexicalUnitImpl color) {
-        if (isHsla(color) || isRgba(color)) {
+        if (isTransparent(color)) {
+            return 0;
+        } else if (isHsla(color) || isRgba(color)) {
             ActualArgumentList params = color.getParameterList();
             return params.get(params.size() - 1).getContainedValue()
                     .getFloatValue();
@@ -198,7 +213,10 @@ public class ColorUtil {
      * @return RGB components or null if not a color
      */
     public static int[] colorToRgb(LexicalUnitImpl color) {
-        if (isRgba(color)) {
+        if (isTransparent(color)) {
+            // as per https://www.w3.org/TR/css-color-3/#transparent-def
+            return new int[] { 0, 0, 0, 0 };
+        } else if (isRgba(color)) {
             if (color.getParameterList().size() == 2
                     && color.getParameterList().get(0) instanceof LexicalUnitImpl) {
                 return colorToRgb((LexicalUnitImpl) color.getParameterList()

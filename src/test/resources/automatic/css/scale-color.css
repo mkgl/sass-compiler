@@ -34,3 +34,8 @@
   sla: rgba(36, 129, 129, 0.375);
   ga: rgba(16, 56, 112, 0.75);
 }
+
+.transparent {
+  t1: transparent;
+  t2: rgba(0, 0, 12, 0);
+}
