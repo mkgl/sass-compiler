@@ -35,7 +35,7 @@ public class ColorUtil {
             .compile("#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})");
     private static Map<String, String> colorNameToHex = new HashMap<String, String>();
     private static Map<String, String> hexToColorName = new HashMap<String, String>();
-    private static String transparent = "transparent";
+    public static String transparent = "transparent";
 
     static {
         colorNameToHex.put("aqua", "#00ffff");

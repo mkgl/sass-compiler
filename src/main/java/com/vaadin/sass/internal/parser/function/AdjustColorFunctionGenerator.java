@@ -43,12 +43,17 @@ public class AdjustColorFunctionGenerator extends AbstractFunctionGenerator {
         checkParams(function, actualArguments);
         LexicalUnitImpl color = getColor(function, actualArguments);
         float alpha = 1;
-        if (ColorUtil.isRgba(color) || ColorUtil.isHsla(color)) {
+        if (ColorUtil.isTransparent(color)) {
+            alpha = 0f;
+        } else if (ColorUtil.isRgba(color) || ColorUtil.isHsla(color)) {
             int lastIndex = color.getParameterList().size() - 1;
             alpha = color.getParameterList().get(lastIndex).getContainedValue()
                     .getFloatValue();
         }
         Float[] adjustBy = getAdjustments(function, actualArguments);
+        if (!anySet(adjustBy, 0, 7) && ColorUtil.isTransparent(color)) {
+            return LexicalUnitImpl.createIdent(ColorUtil.transparent);
+        }
         if (adjustBy[6] != null) {
             if ("adjust-color".equals(functionName)) {
                 alpha += adjustBy[6];
