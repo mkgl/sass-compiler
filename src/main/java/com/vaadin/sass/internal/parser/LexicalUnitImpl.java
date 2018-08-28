@@ -990,7 +990,10 @@ public class LexicalUnitImpl implements LexicalUnit, SCSSLexicalUnit,
             case LexicalUnit.SAC_COUNTERS_FUNCTION:
             case LexicalUnit.SAC_RECT_FUNCTION:
             case LexicalUnit.SAC_FUNCTION:
-                if (ColorUtil.isColor(this)) {
+                if (ColorUtil.isTransparent(this)) {
+                    text = "transparent";
+                    break;
+                } else if (ColorUtil.isColor(this)) {
                     text = ColorUtil.rgbToColorString(ColorUtil
                             .colorToRgb(this));
                     break;
@@ -998,11 +1001,7 @@ public class LexicalUnitImpl implements LexicalUnit, SCSSLexicalUnit,
                     float alpha = params.get(params.size() - 1)
                             .getContainedValue().getFloatValue();
                     rgb = ColorUtil.colorToRgb(this);
-                    if (alpha == 0.0f && rgb[0] == 0 && rgb[1] == 0
-                            && rgb[2] == 0) {
-                        text = "transparent";
-                        break;
-                    } else if (alpha == 1.0f) {
+                    if (alpha == 1.0f) {
                         text = ColorUtil.rgbToColorString(ColorUtil
                                 .colorToRgb(this));
                         break;
